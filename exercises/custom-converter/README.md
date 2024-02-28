@@ -47,7 +47,7 @@ code you'll be using. The method `toPayload` returns a Payload object, which is 
 
 ## Part B: Implement a Composite Data Converter
 
-1. To be able to use this Custom Data Converter, you need to be able to register it with your Client and Worker. To do this, we will create a Composite Data Converter. A Composite Data Converter is used to apply custom, type-specific Payload Converters in a specified order. You can construct a Composite Data Converter that provies a set of rules in a custom order. For example, if you had something like this:
+1. To be able to use this Custom Data Converter, you need to be able to register it with your Client and Worker. To do this, we will create a Composite Data Converter. A Composite Data Converter is used to apply custom, type-specific Payload Converters in a specified order. You can construct a Composite Data Converter that provides a set of rules in a custom order. For example, if you had something like this:
 
    ```typescript
    export const payloadConverter = new CompositePayloadConverter(
@@ -57,7 +57,7 @@ code you'll be using. The method `toPayload` returns a Payload object, which is 
    );
    ```
 
-Order is important. For example, first the `UndefinedPayloadConverter` will converts between JS `undefined` and `NULL` Payloads. Then, `BinaryPayloadConverter`
+Order is important. For example, first the `UndefinedPayloadConverter` will convert between JS `undefined` and `NULL` Payloads. Then, `BinaryPayloadConverter`
 converts between binary data types and RAW Payloads. Finally, `EjsonPayloadConverter` will convert EJSON values.
 
 You don't need to change anything in your Workflow code. You only need to add a path to your `payload-converter.ts` file to your Client and Worker code.

@@ -47,9 +47,9 @@ function toJSON({ metadata, data }: proto.temporal.api.common.v1.IPayload): JSON
 }
 
 async function main({ port = 8888 }: any) {
-  // TODO Part A: Instantiate a new variable named `codec` 
-  // which await calls the `create` method on the `EncryptionCodec`. 
-  // Pass in `test-key-id`. 
+  // TODO Part A: Instantiate a new variable named `codec`
+  // which await calls the `create` method on the `EncryptionCodec`.
+  // Pass in `test-key-id`.
   // This is an identifier for a specific encryption key used by the codec.
   const codec = '';
 
@@ -72,7 +72,7 @@ async function main({ port = 8888 }: any) {
       const payloads = decoded.map(toJSON);
       res.json({ payloads }).end();
     } catch (err) {
-      console.log("ERR", err)
+      console.log('ERR', err);
       res.status(500).end('Internal server error');
     }
   });

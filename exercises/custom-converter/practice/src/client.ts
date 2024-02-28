@@ -18,7 +18,7 @@ async function run() {
   const client = new Client({
     connection,
     // TODO Part B: Set a dataConverter key to use the `payloadConverter` from `payload-converter.ts`.
-    // The shape should look like: 
+    // The shape should look like:
     // dataConverter: {
     //    payloadConverterPath: require.resolve('file-to-path')
     // }

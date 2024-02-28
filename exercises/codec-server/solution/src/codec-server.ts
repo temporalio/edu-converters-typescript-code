@@ -49,10 +49,12 @@ async function main({ port = 8888 }: any) {
   const codec = await EncryptionCodec.create('test-key-id');
 
   const app = express();
-  app.use(cors({
-    origin: 'http://localhost:8233', // Allow only this origin to make requests
-    allowedHeaders: ['x-namespace', 'content-type']
-  }));
+  app.use(
+    cors({
+      origin: 'http://localhost:8233', // Allow only this origin to make requests
+      allowedHeaders: ['x-namespace', 'content-type'],
+    })
+  );
   app.use(express.json());
 
   app.get('/', (req, res) => {
@@ -67,7 +69,7 @@ async function main({ port = 8888 }: any) {
       const payloads = decoded.map(toJSON);
       res.json({ payloads }).end();
     } catch (err) {
-      console.log("ERR", err)
+      console.log('ERR', err);
       res.status(500).end('Internal server error');
     }
   });

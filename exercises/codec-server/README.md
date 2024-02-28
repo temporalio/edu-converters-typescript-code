@@ -3,7 +3,7 @@
 During this exercise, you will:
 
 - Review a Codec Server implementation
-- Configure a Codec Server to share your custom converter logic
+- Configure a Codec Server to share converter logic
 - Enable CORS and review other deployment parameters
 - Integrate your Codec Server with the Temporal Web UI
 - Securely return decoded results in the CLI and the Web UI
@@ -22,7 +22,7 @@ You'll need two terminal windows for this exercise.
 
 ## Part A: Configure a Codec Server to Use Your Data Converter
 
-1. First, you'll review a barebones Codec Server implementation in TypeScript, and make the necessary changes to integrate Encryption Converter already supplied for you in this same directory. Examine the `codec-server.ts` file in the `codec-server` subdirectory. This file contains a complete HTTP server implementation using the [Express](https://www.npmjs.com/package/express) library. It contains endpoints at `/encode` and `/decode` as expected by the Temporal CLI, Web UI, and SDKs, and allows for CORS enablement. These are the baseline requirements for a Temporal Codec Server, which can be implemented using standard HTTP functionality in any language of your choosing.
+1. First, you'll review a barebones Codec Server implementation in TypeScript, and make the necessary changes to integrate the Encryption Converter already supplied for you in this same directory. Examine the `codec-server.ts` file in the `codec-server` subdirectory. This file contains a complete HTTP server implementation using the [Express](https://www.npmjs.com/package/express) library. It contains endpoints at `/encode` and `/decode` as expected by the Temporal CLI, Web UI, and SDKs, and allows for CORS enablement. These are the baseline requirements for a Temporal Codec Server, which can be implemented using standard HTTP functionality in any language of your choosing.
 
 2. Temporal Codec Servers need, at minimum, one additional configuration detail before they can be deployed from sample code. Specifically, Codec Servers need to import the Converter logic from your own application. Edit the `import` block at the top of `codec-server.ts` to import `encryption-codec`, also provided in the same directory, as a module named `EncryptionCodec`.
 
@@ -43,8 +43,7 @@ You now have a working Codec Server implementation. In the following steps, you'
 
 ## Part B: Enable CORS and Configure Temporal Web UI Integration
 
-1. The next step is to enable Codec Server integration with the
-   Temporal Web UI. This isn't necessary if you don't plan to use the Web UI to view your Workflow output, but it provides a stock example of how to integrate Codec Server requests into a web app, and is supported by Temporal Cloud. Without Codec Server integration, the Temporal Web UI cannot decode output, and results are displayed encoded:
+1. The next step is to enable Codec Server integration with the Temporal Web UI. This isn't necessary if you don't plan to use the Web UI to view your Workflow output, but it provides a stock example of how to integrate Codec Server requests into a web app, and is supported by Temporal Cloud. Without Codec Server integration, the Temporal Web UI cannot decode output, and results are displayed encoded:
 
 ![Encoded Workflow Output in Web UI](images/encoded-output.png)
 
@@ -59,10 +58,9 @@ To enable CORS in your Express.js server, you need to use the cors middleware. T
 
 We will use `app.use(cors({origin: 'http://localhost:8233', allowedHeaders:['x-namespace', 'content-type']}))`.
 
-For the Codec Server, we specify the `allowedHeaders` option to ensure that only requests with headers `x-namespace` and `content-type` can interact with the server. This is particularly important for ensuring that only legitimate requests are processed by your server. We will also use CORS to allowing traffic specifically to `localhost:8233`, the default address for the Temporal Web UI.
+For the Codec Server, we specify the `allowedHeaders` option to ensure that only requests with headers `x-namespace` and `content-type` can interact with the server. This is particularly important for ensuring that only legitimate requests are processed by your server. We will also use CORS to allow traffic specifically to `localhost:8233`, the default address for the Temporal Web UI.
 
-2. Now you can proceed to integrate your Codec Server with the Web UI. You should already have a local Temporal Cluster running that you can access in a browser at `http://localhost:8233` by default. In the top-right corner of the Web UI, you should see a 3D glasses icon, where you can access the Codec
-   erver settings:
+2. Now you can proceed to integrate your Codec Server with the Web UI. You should already have a local Temporal Cluster running that you can access in a browser at `http://localhost:8233` by default. In the top-right corner of the Web UI, you should see a 3D glasses icon, where you can access the Codec server settings:
 
 ![Codec Server settings icon](images/configure-codec-server-button.png)
 
@@ -70,8 +68,7 @@ In the Codec Server settings menu, add the path to your Codec Server, which shou
 
 ![Codec Server settings](images/codec-server-settings.png)
 
-Note that you can toggle the "Use Cluster-level setting" option to save this
-Codec Server for all users of this cluster, or only for you, which would be especially relevant if you were running a `localhost` Codec Server with a remote Temporal Cluster. Click the "Apply" button. The 3D glasses in the top nav should now be colorized, indicating a successful connection:
+Note that you can toggle the "Use Cluster-level setting" option to save this Codec Server for all users of this cluster, or only for you, which would be especially relevant if you were running a `localhost` Codec Server with a remote Temporal Cluster. Click the "Apply" button. The 3D glasses in the top nav should now be colorized, indicating a successful connection:
 
 ![Codec Server enabled](images/codec-server-enabled.png)
 

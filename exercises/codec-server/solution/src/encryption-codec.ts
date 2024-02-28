@@ -17,7 +17,7 @@ export class EncryptionCodec implements PayloadCodec {
   }
 
   async encode(payloads: Payload[]): Promise<Payload[]> {
-    console.log("ENCODED")
+    console.log('ENCODED');
     return Promise.all(
       payloads.map(async (payload) => ({
         metadata: {
@@ -34,7 +34,7 @@ export class EncryptionCodec implements PayloadCodec {
   }
 
   async decode(payloads: Payload[]): Promise<Payload[]> {
-    console.log("DECODED")
+    console.log('DECODED');
     return Promise.all(
       payloads.map(async (payload) => {
         if (!payload.metadata || decode(payload.metadata[METADATA_ENCODING_KEY]) !== ENCODING) {

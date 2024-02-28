@@ -17,57 +17,57 @@ import {
   TimeoutType,
 } from '@temporalio/common';
 export function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === 'object' && value !== null;
-  }
+  return typeof value === 'object' && value !== null;
+}
 
 export function isError(error: unknown): error is Error {
-    return (
-      isRecord(error) &&
-      typeof error.name === 'string' &&
-      typeof error.message === 'string' &&
-      (error.stack == null || typeof error.stack === 'string')
-    );
-  }
+  return (
+    isRecord(error) &&
+    typeof error.name === 'string' &&
+    typeof error.message === 'string' &&
+    (error.stack == null || typeof error.stack === 'string')
+  );
+}
 
 export function combineRegExp(...regexps: RegExp[]): RegExp {
-    return new RegExp(regexps.map((x) => `(?:${x.source})`).join('|'));
-  }
+  return new RegExp(regexps.map((x) => `(?:${x.source})`).join('|'));
+}
 
 /**
  * Stack traces will be cutoff when on of these patterns is matched
  */
 export const CUTOFF_STACK_PATTERNS = combineRegExp(
-    /** Activity execution */
-    /\s+at Activity\.execute \(.*[\\/]worker[\\/](?:src|lib)[\\/]activity\.[jt]s:\d+:\d+\)/,
-    /** Workflow activation */
-    /\s+at Activator\.\S+NextHandler \(.*[\\/]workflow[\\/](?:src|lib)[\\/]internals\.[jt]s:\d+:\d+\)/,
-    /** Workflow run anything in context */
-    /\s+at Script\.runInContext \((?:node:vm|vm\.js):\d+:\d+\)/
-  );
+  /** Activity execution */
+  /\s+at Activity\.execute \(.*[\\/]worker[\\/](?:src|lib)[\\/]activity\.[jt]s:\d+:\d+\)/,
+  /** Workflow activation */
+  /\s+at Activator\.\S+NextHandler \(.*[\\/]workflow[\\/](?:src|lib)[\\/]internals\.[jt]s:\d+:\d+\)/,
+  /** Workflow run anything in context */
+  /\s+at Script\.runInContext \((?:node:vm|vm\.js):\d+:\d+\)/
+);
 
-  /**
+/**
  * Any stack trace frames that match any of those wil be dopped.
  * The "null." prefix on some cases is to avoid https://github.com/nodejs/node/issues/42417
  */
 export const DROPPED_STACK_FRAMES_PATTERNS = combineRegExp(
-    /** Internal functions used to recursively chain interceptors */
-    /\s+at (null\.)?next \(.*[\\/]common[\\/](?:src|lib)[\\/]interceptors\.[jt]s:\d+:\d+\)/,
-    /** Internal functions used to recursively chain interceptors */
-    /\s+at (null\.)?executeNextHandler \(.*[\\/]worker[\\/](?:src|lib)[\\/]activity\.[jt]s:\d+:\d+\)/
-  );
+  /** Internal functions used to recursively chain interceptors */
+  /\s+at (null\.)?next \(.*[\\/]common[\\/](?:src|lib)[\\/]interceptors\.[jt]s:\d+:\d+\)/,
+  /** Internal functions used to recursively chain interceptors */
+  /\s+at (null\.)?executeNextHandler \(.*[\\/]worker[\\/](?:src|lib)[\\/]activity\.[jt]s:\d+:\d+\)/
+);
 
 /**
  * Cuts out the framework part of a stack trace, leaving only user code entries
  */
 export function cutoffStackTrace(stack?: string): string {
-    const lines = (stack ?? '').split(/\r?\n/);
-    const acc = Array<string>();
-    for (const line of lines) {
-      if (CUTOFF_STACK_PATTERNS.test(line)) break;
-      if (!DROPPED_STACK_FRAMES_PATTERNS.test(line)) acc.push(line);
-    }
-    return acc.join('\n');
+  const lines = (stack ?? '').split(/\r?\n/);
+  const acc = Array<string>();
+  for (const line of lines) {
+    if (CUTOFF_STACK_PATTERNS.test(line)) break;
+    if (!DROPPED_STACK_FRAMES_PATTERNS.test(line)) acc.push(line);
   }
+  return acc.join('\n');
+}
 
 /**
  * A `FailureConverter` is responsible for converting from proto `Failure` instances to JS `Errors` and back.

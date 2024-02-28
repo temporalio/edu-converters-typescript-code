@@ -40,10 +40,10 @@ export class EjsonPayloadConverter implements PayloadConverterWithEncoding {
   }
 
   public fromPayload<T>(content: Payload): T {
-      if (content.data) {
-        return EJSON.parse(decode(content.data))
-      } else {
-        return content.data as T;
+    if (content.data) {
+      return EJSON.parse(decode(content.data));
+    } else {
+      return content.data as T;
     }
   }
 }
