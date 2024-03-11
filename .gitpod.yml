@@ -54,9 +54,9 @@ ports:
     description: New (v2) Temporal Web UI
     onOpen: ignore
     visibility: private
-  - name: Greeting Service
-    description: Local microservice used in exercises
-    port: 9999
+  - name: Codec Server Microservice
+    description: Local Codec Server used in exercises
+    port: 8888
     onOpen: ignore
     visibility: private
 
