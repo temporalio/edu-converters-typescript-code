@@ -37,13 +37,6 @@ tasks:
       clear
       echo "Use this terminal to run workflows..."
     openMode: split-right
-  - name: Microservice
-    command: |
-      source .bash_aliases
-      clear
-      echo "Use this terminal to start the microservice used in various activities."
-    openMode: split-right
-
 
 ports:
   - name: Temporal server
