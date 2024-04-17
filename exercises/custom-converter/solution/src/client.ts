@@ -19,7 +19,7 @@ async function run() {
     connection,
     dataConverter: {
       payloadConverterPath: require.resolve('./payload-converter.ts'),
-      // failureConverterPath: require.resolve('./failure-converter.ts'),
+      failureConverterPath: require.resolve('./failure-converter.ts'),
     },
   });
 

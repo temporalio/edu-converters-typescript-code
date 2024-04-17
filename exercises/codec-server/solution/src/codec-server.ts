@@ -17,8 +17,6 @@ interface Body {
 
 /**
  * Helper function to convert a valid proto JSON to a payload object.
- *
- * This method will be part of the SDK when it supports proto JSON serialization.
  */
 function fromJSON({ metadata, data }: JSONPayload): Payload {
   return {
@@ -31,8 +29,6 @@ function fromJSON({ metadata, data }: JSONPayload): Payload {
 
 /**
  * Helper function to convert a payload object to a valid proto JSON.
- *
- * This method will be part of the SDK when it supports proto JSON serialization.
  */
 function toJSON({ metadata, data }: proto.temporal.api.common.v1.IPayload): JSONPayload {
   return {

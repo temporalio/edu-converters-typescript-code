@@ -30,13 +30,16 @@ You'll need two terminal windows for this exercise.
 
 4. After making these additions, you should have a functioning Codec Server, integrated with your application logic. Again, everything else in here is configured as generically as possible — note that this example Codec Server listens on port 8888. This fulfills all the requirements of a Temporal Codec Server, and you could incorporate any other authentication requirements on top of HTTP as needed. Run your Codec Server with `npm run codec-server` from the root of your project directory. This will block the terminal it runs in, and await connections.
 
-5. Now you can retrieve the decoded output of your Workflow Execution from the Encryption Codec. From another terminal window, run `temporal workflow show \ -w codec-server-123 --codec-endpoint 'http://localhost:8888'`. It should retain the decoded result appended:
+5. Now you can retrieve the decoded output of your Workflow Execution from the Encryption Codec. From another terminal window, run your Worker with `npm run start`.
 
-```
-...
-Result:
-  Status: COMPLETED
-  Output: ["Alice: Private message for Bob.\nBob: Hi Alice, I'm Workflow Bob."]
+6. From another terminal window, run your workflow with `run run workflow`. You should see:
+
+```ENCODED
+Started workflow codec-server-123
+DECODED
+Decrypting payload.data: <Buffer b6 5d f3 28 2c 58 4f 67 05 a5 3a fe 5c 7e d2 26 05 f0 b8 17 01 4e 7d 12 cc bb 42 cb 2d 51 4d d1 73 46 4c aa 09 35 e3 61 3e 87 56 84 4f 9e eb eb 2c d4 ... 71 more bytes>
+Alice: Private message for Bob.
+Bob: Hi Alice, I'm Workflow Bob.
 ```
 
 You now have a working Codec Server implementation. In the following steps, you'll learn how to integrate it more closely with a Temporal Cluster for production environments.
