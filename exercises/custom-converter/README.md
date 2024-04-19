@@ -95,7 +95,9 @@ export async function converterActivity(input: string): Promise<string> {
 }
 ```
 
-5. Next, try re-running your Workflow, and it should fail. 5. Run `temporal workflow show -w converters-workflowID` to get the status of your
+5. Next, try re-running your Workflow, and it should fail. 
+
+Run `temporal workflow show -w converters-workflowID` to get the status of your
 failed Workflow. Notice that the `Failure:` field should now display an encoded
 result, rather than a plain text error:
 
