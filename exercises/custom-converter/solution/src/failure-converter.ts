@@ -1,3 +1,3 @@
-import { DefaultFailureConverter } from './failure';
+import { DefaultFailureConverter } from '@temporalio/common';
 
-export const failureConverter = new DefaultFailureConverter();
+export const failureConverter = new DefaultFailureConverter({ encodeCommonAttributes: true });

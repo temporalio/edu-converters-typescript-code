@@ -87,8 +87,7 @@ add more features to it.
 
 ```typescript
 export async function converterActivity(input: string): Promise<string> {
-  const context = activity.Context.current();
-  context.log.info("User is successfully logged", { input });
+  activity.log.info("User is successfully logged", { input });
   ApplicationFailure.create({
     nonRetryable: true,
     message: `Activity failed:`,
