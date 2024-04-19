@@ -22,11 +22,11 @@ You'll need two terminal windows for this exercise.
 ## Part A: Implement a Custom Data Converter
 
 1. Defining a Custom Data Converter is a straightforward change to your existing
-Worker and Starter code. The example in the `practice` subdirectory of this
-exercise is missing the necessary change to use a Custom Data Converter,
-meaning that you can run it out of the box, and produce JSON output using the
-Default Data Converter. You'll do this first, so you have an idea of the
-expected output. First, start the Worker:
+   Worker and Starter code. The example in the `practice` subdirectory of this
+   exercise is missing the necessary change to use a Custom Data Converter,
+   meaning that you can run it out of the box, and produce JSON output using the
+   Default Data Converter. You'll do this first, so you have an idea of the
+   expected output. First, start the Worker:
 
 ```shell
 npm run start
@@ -43,18 +43,18 @@ npm run workflow
 We will fix this by using a Custom Converter.
 
 4. Next, take a look in `ejson-payload-converter.ts`. This contains the Custom Converter
-code you'll be using. The method `toPayload` returns a Payload object, which is used to manage and transport serialized data. The method `fromPayload` returns the deserialized data. In the `fromPayload` method, we want to decode the data so wrap the data with the `decode` function, which is already imported for you from `@temporalio/common`. Then take the decoded data and wrap it with `EJSON.parse()`. Now, we are returning deserialized data.
+   code you'll be using. The method `toPayload` returns a Payload object, which is used to manage and transport serialized data. The method `fromPayload` returns the deserialized data. In the `fromPayload` method, we want to decode the data so wrap the data with the `decode` function, which is already imported for you from `@temporalio/common`. Then take the decoded data and wrap it with `EJSON.parse()`. Now, we are returning deserialized data.
 
 ## Part B: Implement a Composite Data Converter
 
 1. To be able to use this Custom Data Converter, you need to be able to register it with your Client and Worker. To do this, we will create a Composite Data Converter. A Composite Data Converter is used to apply custom, type-specific Payload Converters in a specified order. You can construct a Composite Data Converter that provides a set of rules in a custom order. For example, if you had something like this:
 
 ```typescript
-   export const payloadConverter = new CompositePayloadConverter(
-     new UndefinedPayloadConverter(),
-     new BinaryPayloadConverter(),
-     new EjsonPayloadConverter()
-   );
+export const payloadConverter = new CompositePayloadConverter(
+  new UndefinedPayloadConverter(),
+  new BinaryPayloadConverter(),
+  new EjsonPayloadConverter()
+);
 ```
 
 Order is important. For example, first the `UndefinedPayloadConverter` will convert between JS `undefined` and `NULL` Payloads. Then, `BinaryPayloadConverter`
@@ -82,13 +82,12 @@ add more features to it.
 
 3. Just like you did with `payload-converter.ts`, add the `failure-converter.ts` file to your Client and Worker code.
 
-4. To test your Failure Converter, change your Activity to return an artificial
-   error. In your Activity code, throw a non-retryable Application Failure error.
+4. To test your Failure Converter, change your Activity in `activities.ts` to return an artificial error. In your Activity code, throw a non-retryable Application Failure error.
 
 ```typescript
 export async function converterActivity(input: string): Promise<string> {
   activity.log.info("User is successfully logged", { input });
-  ApplicationFailure.create({
+  throw ApplicationFailure.create({
     nonRetryable: true,
     message: `Activity failed:`,
   });
@@ -96,7 +95,7 @@ export async function converterActivity(input: string): Promise<string> {
 }
 ```
 
-Next, try re-running your Workflow, and it should fail. 5. Run `temporal workflow show -w converters-workflowID` to get the status of your
+5. Next, try re-running your Workflow, and it should fail. 5. Run `temporal workflow show -w converters-workflowID` to get the status of your
 failed Workflow. Notice that the `Failure:` field should now display an encoded
 result, rather than a plain text error:
 

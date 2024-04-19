@@ -4,6 +4,9 @@ import { User, Result } from './shared';
 
 const { converterActivity } = proxyActivities<typeof activities>({
   startToCloseTimeout: '10 seconds',
+  retry: {
+    maximumAttempts: 1  // No retries
+  }
 });
 
 export async function converterWorkflow(user: User): Promise<Result> {

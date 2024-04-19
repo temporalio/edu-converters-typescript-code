@@ -1,4 +1,3 @@
-import { DefaultFailureConverter } from './failure';
+import { DefaultFailureConverter } from '@temporalio/common';
 
-// TODO Part C: Create a new instance of `DefaultFailureConverter`.
 export const failureConverter = '';
