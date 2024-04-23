@@ -6,6 +6,16 @@ tasks:
     init: |
       ln /workspace/edu-appdatasec-typescript-code/.bash.cfg /workspace/.bash.cfg
       exit;
+    # task fixes the 'Analysis Tools Missing' warning in status bar
+  - name: install staticcheck
+    init: |
+      go install honnef.co/go/tools/cmd/staticcheck@latest
+      exit;
+    # task retrieves the project dependencies
+  - name: Go Get Fetcher 
+    init: |
+      go get -v -t -d ./...
+      exit;
     # task starts the Temporal Service via the CLI
   - name: Temporal Local Development Server
     command: |
@@ -40,7 +50,7 @@ tasks:
       clear
       echo "Use this terminal to run commands.."
     openMode: split-right
-  - name: Codecserver
+  - name: Codec Server
     command: |
       source /workspace/edu-appdatasec-typescript-code/.bash.cfg
       clear
@@ -51,20 +61,20 @@ ports:
   - name: Temporal server
     port: 7233
     onOpen: ignore
-  - name: Temporal Web UI v2
-    port: 8080 # temporal UI
-    description: New (v2) Temporal Web UI
+  - name: Codec server
+    port: 8081
+    onOpen: ignore
+  - name: Temporal Web UI
+    port: 8080 # custom port, as per --ui-port option above
+    description: Temporal Web UI
     onOpen: ignore
     visibility: private
-  - name: Codec Server Microservice
-    description: Local Codec Server used in exercises
-    port: 8888
-    onOpen: ignore
 
 vscode:
   extensions:
     - golang.Go
     - ms-python.python
+    - ms-python.debugpy
     - redhat.java
     - vscjava.vscode-java-test
     - vscjava.vscode-java-debug
