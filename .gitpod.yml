@@ -67,7 +67,6 @@ ports:
     port: 8080 # custom port, as per --ui-port option above
     description: Temporal Web UI
     onOpen: ignore
-    visibility: private
 
 vscode:
   extensions:
