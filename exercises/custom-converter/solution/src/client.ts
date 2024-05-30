@@ -18,8 +18,8 @@ async function run() {
   const client = new Client({
     connection,
     dataConverter: {
-      payloadConverterPath: require.resolve('./payload-converter.ts'),
-      failureConverterPath: require.resolve('./failure-converter.ts'),
+      payloadConverterPath: require.resolve('./payload-converter'),
+      failureConverterPath: require.resolve('./failure-converter'),
     },
   });
 

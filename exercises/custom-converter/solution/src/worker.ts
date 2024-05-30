@@ -11,8 +11,8 @@ async function run() {
     workflowsPath: require.resolve('./workflows'),
     activities,
     dataConverter: {
-      payloadConverterPath: require.resolve('./payload-converter.ts'),
-      failureConverterPath: require.resolve('./failure-converter.ts'),
+      payloadConverterPath: require.resolve('./payload-converter'),
+      failureConverterPath: require.resolve('./failure-converter'),
     },
   });
 
